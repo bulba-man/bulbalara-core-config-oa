@@ -1,0 +1,38 @@
+{
+    "name": "bulbalara/core-config-oa",
+    "description": "config open-admin",
+    "type": "library",
+    "minimum-stability": "stable",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "Bulbalara\\CoreConfigOa\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mikita Dzmitryievich",
+            "email": "dmitrievichn@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "laravel/framework": ">=7.0",
+        "bulbalara/core-config": ">=1.0",
+        "open-admin-org/open-admin": ">=1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0",
+        "laravel/laravel": "~7.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bulbalara\\CoreConfigOa\\ConfigOaServiceProvider"
+            ],
+            "aliases": {
+                "ConfigOA": "\\Bulbalara\\CoreConfigOa\\Facades\\CoreConfigOaFacade"
+            }
+        }
+    }
+}
