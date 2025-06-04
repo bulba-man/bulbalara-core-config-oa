@@ -118,204 +118,204 @@ class ConfigSeeder extends Seeder
             'rules' => 'email'
         ]);
 
-
-        \ConfigOA::addConfig('catalog.fields_masks.sku', [
-            'value' => '{{name}}',
-            'cast' => 'string',
-            'default' => '{{name}}',
-            'backend_type' => 'text',
-            'label' => 'bl.catalog::admin.config.catalog.fields_masks.sku',
-            'description' => '',
-        ]);
-
-
-        \ConfigOA::addConfig('catalog.fields_masks.meta_title', [
-            'value' => '{{name}}',
-            'cast' => 'string',
-            'default' => '{{name}}',
-            'backend_type' => 'text',
-            'label' => 'bl.catalog::admin.config.catalog.fields_masks.meta_title',
-            'description' => '',
-        ]);
-
-
-        \ConfigOA::addConfig('catalog.fields_masks.meta_keyword', [
-            'value' => '{{name}}',
-            'cast' => 'string',
-            'default' => '{{name}}',
-            'backend_type' => 'text',
-            'label' => 'bl.catalog::admin.config.catalog.fields_masks.meta_keyword',
-            'description' => '',
-        ]);
-
-
-        \ConfigOA::addConfig('catalog.fields_masks.meta_description', [
-            'value' => '{{name}} {{description}}',
-            'cast' => 'string',
-            'default' => '{{name}} {{description}}',
-            'backend_type' => 'text',
-            'label' => 'bl.catalog::admin.config.catalog.fields_masks.meta_description',
-            'description' => '',
-        ]);
-
-
-        \ConfigOA::addConfig('catalog.frontend.show_price', [
-            'value' => 1,
-            'cast' => 'boolean',
-            'default' => 1,
-            'backend_type' => 'switch',
-            'label' => 'bl.catalog::admin.config.catalog.frontend.show_price',
-            'description' => '',
-        ]);
-
-        \ConfigOA::addConfig('catalog.frontend.list_mode', [
-            'value' => ListModes::GRID_LIST,
-            'cast' => 'string',
-            'default' => ListModes::GRID_LIST,
-            'backend_type' => 'select',
-            'source' => ListModes::class,
-            'label' => 'bl.catalog::admin.config.catalog.frontend.list_mode',
-            'description' => '',
-        ]);
-
-        \ConfigOA::addConfig('catalog.frontend.per_page_list', [
-            'value' => '12,24,36',
-            'cast' => 'string',
-            'default' => '12,24,36',
-            'backend_type' => 'text',
-            'label' => 'bl.catalog::admin.config.catalog.frontend.per_page_list',
-            'description' => 'bl.catalog::admin.config.catalog.frontend.per_page_list-help',
-        ]);
-
-        \ConfigOA::addConfig('catalog.frontend.per_page_default', [
-            'value' => '12',
-            'cast' => 'string',
-            'default' => '12',
-            'backend_type' => 'text',
-            'label' => 'bl.catalog::admin.config.catalog.frontend.per_page_default',
-            'description' => 'bl.catalog::admin.config.catalog.frontend.per_page_default-help',
-        ]);
-
-        \ConfigOA::addConfig('catalog.frontend.default_sort_by', [
-            'value' => 'position',
-            'cast' => 'string',
-            'default' => 'position',
-            'backend_type' => 'select',
-            'source' => ListSort::class,
-            'label' => 'bl.catalog::admin.config.catalog.frontend.default_sort_by',
-            'description' => 'bl.catalog::admin.config.catalog.frontend.default_sort_by-help',
-        ]);
-
-        \ConfigOA::addConfig('catalog.frontend.list_allow_all', [
-            'value' => '0',
-            'cast' => 'boolean',
-            'default' => '0',
-            'backend_type' => 'switch',
-            'label' => 'bl.catalog::admin.config.catalog.frontend.list_allow_all',
-            'description' => 'bl.catalog::admin.config.catalog.frontend.list_allow_all-help',
-        ]);
-
-        \ConfigOA::addConfig('catalog.frontend.review', [
-            'value' => '0',
-            'cast' => 'boolean',
-            'default' => '0',
-            'backend_type' => 'switch',
-            'label' => 'bl.catalog::admin.config.catalog.frontend.review',
-            'description' => '',
-        ]);
-
-
-
-
-        \ConfigOA::addConfig('catalog.seo.product_url_suffix_enable', [
-            'value' => '1',
-            'cast' => 'boolean',
-            'default' => '1',
-            'backend_type' => 'switch',
-            'label' => 'bl.catalog::admin.config.catalog.seo.product_url_suffix_enable'
-        ]);
-        \ConfigOA::addConfig('catalog.seo.product_url_suffix', [
-            'value' => '.html',
-            'cast' => 'string',
-            'default' => '.html',
-            'backend_type' => 'text',
-            'label' => 'bl.catalog::admin.config.catalog.seo.product_url_suffix',
-            'description' => '',
-        ]);
-        \ConfigOA::addConfig('catalog.seo.category_url_suffix_enable', [
-            'value' => '1',
-            'cast' => 'boolean',
-            'default' => '1',
-            'backend_type' => 'switch',
-            'label' => 'bl.catalog::admin.config.catalog.seo.category_url_suffix_enable'
-        ]);
-        \ConfigOA::addConfig('catalog.seo.category_url_suffix', [
-            'value' => '.html',
-            'cast' => 'string',
-            'default' => '.html',
-            'backend_type' => 'text',
-            'label' => 'bl.catalog::admin.config.catalog.seo.category_url_suffix',
-            'description' => '',
-        ]);
-
-        \ConfigOA::addConfig('catalog.seo.use_catalog', [
-            'value' => '1',
-            'cast' => 'boolean',
-            'default' => '1',
-            'backend_type' => 'switch',
-            'label' => 'bl.catalog::admin.config.catalog.seo.use_catalog'
-        ]);
-        \ConfigOA::addConfig('catalog.seo.product_use_categories', [
-            'value' => '1',
-            'cast' => 'boolean',
-            'default' => '1',
-            'backend_type' => 'switch',
-            'label' => 'bl.catalog::admin.config.catalog.seo.product_use_categories'
-        ]);
-
-        \ConfigOA::addConfig('catalog.seo.category_canonical_tag', [
-            'value' => '1',
-            'cast' => 'boolean',
-            'default' => '1',
-            'backend_type' => 'switch',
-            'label' => 'bl.catalog::admin.config.catalog.seo.category_canonical_tag'
-        ]);
-        \ConfigOA::addConfig('catalog.seo.product_canonical_tag', [
-            'value' => '1',
-            'cast' => 'boolean',
-            'default' => '1',
-            'backend_type' => 'switch',
-            'label' => 'bl.catalog::admin.config.catalog.seo.product_canonical_tag'
-        ]);
-
-        \ConfigOA::addConfig('catalog.currency.base', [
-            'value' => 'USD',
-            'cast' => 'string',
-            'default' => 'USD',
-            'backend_type' => 'select',
-            'source' => \Bulbalara\CatalogOa\Models\Source\Config\Currencies::class,
-            'label' => 'bl.catalog::admin.config.catalog.currency.base',
-            'description' => 'bl.catalog::admin.config.catalog.currency.base-help',
-        ]);
-
-        \ConfigOA::addConfig('catalog.currency.default', [
-            'value' => 'USD',
-            'cast' => 'string',
-            'default' => 'USD',
-            'backend_type' => 'select',
-            'source' => \Bulbalara\CatalogOa\Models\Source\Config\Currencies::class,
-            'label' => 'bl.catalog::admin.config.catalog.currency.default',
-        ]);
-
-        \ConfigOA::addConfig('catalog.currency.allow', [
-            'value' => '',
-            'cast' => 'json',
-            'default' => '["USD", "BYN"]',
-            'backend_type' => 'listbox',
-            'source' => \Bulbalara\CatalogOa\Models\Source\Config\Currencies::class,
-            'label' => 'bl.catalog::admin.config.catalog.currency.allow',
-        ]);
-
+        /*
+                \ConfigOA::addConfig('catalog.fields_masks.sku', [
+                    'value' => '{{name}}',
+                    'cast' => 'string',
+                    'default' => '{{name}}',
+                    'backend_type' => 'text',
+                    'label' => 'bl.catalog::admin.config.catalog.fields_masks.sku',
+                    'description' => '',
+                ]);
+        
+        
+                \ConfigOA::addConfig('catalog.fields_masks.meta_title', [
+                    'value' => '{{name}}',
+                    'cast' => 'string',
+                    'default' => '{{name}}',
+                    'backend_type' => 'text',
+                    'label' => 'bl.catalog::admin.config.catalog.fields_masks.meta_title',
+                    'description' => '',
+                ]);
+        
+        
+                \ConfigOA::addConfig('catalog.fields_masks.meta_keyword', [
+                    'value' => '{{name}}',
+                    'cast' => 'string',
+                    'default' => '{{name}}',
+                    'backend_type' => 'text',
+                    'label' => 'bl.catalog::admin.config.catalog.fields_masks.meta_keyword',
+                    'description' => '',
+                ]);
+        
+        
+                \ConfigOA::addConfig('catalog.fields_masks.meta_description', [
+                    'value' => '{{name}} {{description}}',
+                    'cast' => 'string',
+                    'default' => '{{name}} {{description}}',
+                    'backend_type' => 'text',
+                    'label' => 'bl.catalog::admin.config.catalog.fields_masks.meta_description',
+                    'description' => '',
+                ]);
+        
+        
+                \ConfigOA::addConfig('catalog.frontend.show_price', [
+                    'value' => 1,
+                    'cast' => 'boolean',
+                    'default' => 1,
+                    'backend_type' => 'switch',
+                    'label' => 'bl.catalog::admin.config.catalog.frontend.show_price',
+                    'description' => '',
+                ]);
+        
+                \ConfigOA::addConfig('catalog.frontend.list_mode', [
+                    'value' => ListModes::GRID_LIST,
+                    'cast' => 'string',
+                    'default' => ListModes::GRID_LIST,
+                    'backend_type' => 'select',
+                    'source' => ListModes::class,
+                    'label' => 'bl.catalog::admin.config.catalog.frontend.list_mode',
+                    'description' => '',
+                ]);
+        
+                \ConfigOA::addConfig('catalog.frontend.per_page_list', [
+                    'value' => '12,24,36',
+                    'cast' => 'string',
+                    'default' => '12,24,36',
+                    'backend_type' => 'text',
+                    'label' => 'bl.catalog::admin.config.catalog.frontend.per_page_list',
+                    'description' => 'bl.catalog::admin.config.catalog.frontend.per_page_list-help',
+                ]);
+        
+                \ConfigOA::addConfig('catalog.frontend.per_page_default', [
+                    'value' => '12',
+                    'cast' => 'string',
+                    'default' => '12',
+                    'backend_type' => 'text',
+                    'label' => 'bl.catalog::admin.config.catalog.frontend.per_page_default',
+                    'description' => 'bl.catalog::admin.config.catalog.frontend.per_page_default-help',
+                ]);
+        
+                \ConfigOA::addConfig('catalog.frontend.default_sort_by', [
+                    'value' => 'position',
+                    'cast' => 'string',
+                    'default' => 'position',
+                    'backend_type' => 'select',
+                    'source' => ListSort::class,
+                    'label' => 'bl.catalog::admin.config.catalog.frontend.default_sort_by',
+                    'description' => 'bl.catalog::admin.config.catalog.frontend.default_sort_by-help',
+                ]);
+        
+                \ConfigOA::addConfig('catalog.frontend.list_allow_all', [
+                    'value' => '0',
+                    'cast' => 'boolean',
+                    'default' => '0',
+                    'backend_type' => 'switch',
+                    'label' => 'bl.catalog::admin.config.catalog.frontend.list_allow_all',
+                    'description' => 'bl.catalog::admin.config.catalog.frontend.list_allow_all-help',
+                ]);
+        
+                \ConfigOA::addConfig('catalog.frontend.review', [
+                    'value' => '0',
+                    'cast' => 'boolean',
+                    'default' => '0',
+                    'backend_type' => 'switch',
+                    'label' => 'bl.catalog::admin.config.catalog.frontend.review',
+                    'description' => '',
+                ]);
+        
+        
+        
+        
+                \ConfigOA::addConfig('catalog.seo.product_url_suffix_enable', [
+                    'value' => '1',
+                    'cast' => 'boolean',
+                    'default' => '1',
+                    'backend_type' => 'switch',
+                    'label' => 'bl.catalog::admin.config.catalog.seo.product_url_suffix_enable'
+                ]);
+                \ConfigOA::addConfig('catalog.seo.product_url_suffix', [
+                    'value' => '.html',
+                    'cast' => 'string',
+                    'default' => '.html',
+                    'backend_type' => 'text',
+                    'label' => 'bl.catalog::admin.config.catalog.seo.product_url_suffix',
+                    'description' => '',
+                ]);
+                \ConfigOA::addConfig('catalog.seo.category_url_suffix_enable', [
+                    'value' => '1',
+                    'cast' => 'boolean',
+                    'default' => '1',
+                    'backend_type' => 'switch',
+                    'label' => 'bl.catalog::admin.config.catalog.seo.category_url_suffix_enable'
+                ]);
+                \ConfigOA::addConfig('catalog.seo.category_url_suffix', [
+                    'value' => '.html',
+                    'cast' => 'string',
+                    'default' => '.html',
+                    'backend_type' => 'text',
+                    'label' => 'bl.catalog::admin.config.catalog.seo.category_url_suffix',
+                    'description' => '',
+                ]);
+        
+                \ConfigOA::addConfig('catalog.seo.use_catalog', [
+                    'value' => '1',
+                    'cast' => 'boolean',
+                    'default' => '1',
+                    'backend_type' => 'switch',
+                    'label' => 'bl.catalog::admin.config.catalog.seo.use_catalog'
+                ]);
+                \ConfigOA::addConfig('catalog.seo.product_use_categories', [
+                    'value' => '1',
+                    'cast' => 'boolean',
+                    'default' => '1',
+                    'backend_type' => 'switch',
+                    'label' => 'bl.catalog::admin.config.catalog.seo.product_use_categories'
+                ]);
+        
+                \ConfigOA::addConfig('catalog.seo.category_canonical_tag', [
+                    'value' => '1',
+                    'cast' => 'boolean',
+                    'default' => '1',
+                    'backend_type' => 'switch',
+                    'label' => 'bl.catalog::admin.config.catalog.seo.category_canonical_tag'
+                ]);
+                \ConfigOA::addConfig('catalog.seo.product_canonical_tag', [
+                    'value' => '1',
+                    'cast' => 'boolean',
+                    'default' => '1',
+                    'backend_type' => 'switch',
+                    'label' => 'bl.catalog::admin.config.catalog.seo.product_canonical_tag'
+                ]);
+        
+                \ConfigOA::addConfig('catalog.currency.base', [
+                    'value' => 'USD',
+                    'cast' => 'string',
+                    'default' => 'USD',
+                    'backend_type' => 'select',
+                    'source' => \Bulbalara\CatalogOa\Models\Source\Config\Currencies::class,
+                    'label' => 'bl.catalog::admin.config.catalog.currency.base',
+                    'description' => 'bl.catalog::admin.config.catalog.currency.base-help',
+                ]);
+        
+                \ConfigOA::addConfig('catalog.currency.default', [
+                    'value' => 'USD',
+                    'cast' => 'string',
+                    'default' => 'USD',
+                    'backend_type' => 'select',
+                    'source' => \Bulbalara\CatalogOa\Models\Source\Config\Currencies::class,
+                    'label' => 'bl.catalog::admin.config.catalog.currency.default',
+                ]);
+        
+                \ConfigOA::addConfig('catalog.currency.allow', [
+                    'value' => '',
+                    'cast' => 'json',
+                    'default' => '["USD", "BYN"]',
+                    'backend_type' => 'listbox',
+                    'source' => \Bulbalara\CatalogOa\Models\Source\Config\Currencies::class,
+                    'label' => 'bl.catalog::admin.config.catalog.currency.allow',
+                ]);
+        */
 
         \ConfigOA::addConfig('design.head.favicon', [
             'value' => '',

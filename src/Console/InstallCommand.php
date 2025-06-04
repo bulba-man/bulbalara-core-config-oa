@@ -19,7 +19,7 @@ class InstallCommand extends Command
     {
         $this->installConfigPackage();
         $this->initDatabase();
-//        $this->installOpenAdminExt();
+        $this->installOpenAdminExt();
     }
 
     protected function installOpenAdminExt(): void

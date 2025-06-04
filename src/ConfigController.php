@@ -166,7 +166,10 @@ class ConfigController extends AdminController
 
     protected function fillField(Field $field, ConfigModel $configItem): Field
     {
-        $field->setValue($configItem->coreConfig->value);
+        if (!$field->value()) {
+            $field->setValue($configItem->coreConfig->value);
+        }
+
         $field->setOriginal([$field->column() => $configItem->coreConfig->value]);
 
         if ($configItem->description) {

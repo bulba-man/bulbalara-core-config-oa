@@ -16,7 +16,10 @@ class CoreConfigExtension extends Extension
      */
     public static function load()
     {
-
+        foreach (\Bulbalara\CoreConfig\Models\Config::all() as $config) {
+            $value = (!is_null($config->value)) ? $config->value : $config->default;
+            config([$config->path => $value]);
+        }
     }
 
     /**
