@@ -4,6 +4,7 @@ namespace Bulbalara\CoreConfigOa;
 
 use OpenAdmin\Admin\Admin;
 use OpenAdmin\Admin\Extension;
+use Illuminate\Support\Facades\Schema;
 
 class CoreConfigExtension extends Extension
 {
@@ -16,6 +17,10 @@ class CoreConfigExtension extends Extension
      */
     public static function load()
     {
+        if (!Schema::hasTable(config('bl.config.db.table', 'core_config'))) {
+            return;
+        }
+
         foreach (\Bulbalara\CoreConfig\Models\Config::all() as $config) {
             $value = (!is_null($config->value)) ? $config->value : $config->default;
             config([$config->path => $value]);
