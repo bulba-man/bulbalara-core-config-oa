@@ -17,7 +17,11 @@ class CoreConfigExtension extends Extension
      */
     public static function load()
     {
-        if (!Schema::hasTable(config('bl.config.db.table', 'core_config'))) {
+        try {
+            if (!Schema::hasTable(config('bl.config.db.table', 'core_config'))) {
+                return;
+            }
+        } catch (\Exception $e) {
             return;
         }
 
