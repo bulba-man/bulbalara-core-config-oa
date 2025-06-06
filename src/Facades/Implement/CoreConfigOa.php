@@ -47,6 +47,11 @@ class CoreConfigOa
             Arr::get($options, 'default', '')
         );
 
+        $backendType = Arr::get($options, 'backend_type', 'notset');
+        if ($backendType == 'notset') {
+            return null;
+        }
+
         $config = new ConfigModel;
 
         $config->config_id = $coreConfig->getKey();
