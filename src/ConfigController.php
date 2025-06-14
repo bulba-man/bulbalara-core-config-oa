@@ -60,22 +60,22 @@ class ConfigController extends AdminController
             $form->fieldset($groupLabel, function (Form $form) use($groupFields, $allFields) {
 
                 foreach ($groupFields as $fieldName => $groupField) {
-                    if (!isset($allFields[$groupField['path']])) {
+                    if (!Arr::has($allFields, $groupField['path'])) {
                         continue;
                     }
 
-                    $field = $allFields[$groupField['path']];
+                    $field = Arr::get($allFields, $groupField['path']);
                     $form->pushField($field);
 
                     if (isset($groupField['dependencies']) && count($groupField['dependencies'])) {
                         foreach ($groupField['dependencies'] as $value => $depFields) {
                             $field->when($value, function (Form $form) use ($depFields, $allFields){
                                 foreach ($depFields as $depFieldName) {
-                                    if (!isset($allFields[$depFieldName])) {
+                                    if (!Arr::has($allFields, $depFieldName)) {
                                         continue;
                                     }
 
-                                    $form->pushField($allFields[$depFieldName]);
+                                    $form->pushField(Arr::get($allFields, $depFieldName));
                                 }
                             });
                         }
@@ -102,7 +102,16 @@ class ConfigController extends AdminController
                 [$depSection, $depGroup, $depField] = explode('.', $configItem->depends_of);
                 $configsTree[$depSection][$depGroup][$depField]['dependencies'][$configItem->depends_val][] = $fieldPath;
             } else {
-                [$section, $group, $field] = explode('.', $fieldPath);
+                $pathParts = explode('.', $fieldPath);
+                $section = $pathParts[0] ?? null;
+                $group = $pathParts[1] ?? null;
+                $field = $pathParts[2] ?? null;
+                $subField = $pathParts[3] ?? null;
+
+                if ($subField) {
+                    $field .= '.'.$subField;
+                }
+
                 $fieldData = [
                     'path' => $configItem->coreConfig->path,
                     'order' => $configItem->order,
@@ -137,7 +146,7 @@ class ConfigController extends AdminController
         foreach ($configs as $configItem) {
             $field = $this->makeField($configItem);
             if ($field) {
-                $formFields[$configItem->coreConfig->path] = $this->fillField($field, $configItem);;
+                $formFields = Arr::add($formFields, $configItem->coreConfig->path, $this->fillField($field, $configItem));
             }
         }
 
@@ -230,6 +239,43 @@ class ConfigController extends AdminController
 
     }
 
+    protected function processValueOrContinue($value, $path, &$allFields, &$fields)
+    {
+        if (is_array(Arr::get($allFields, $path))) {
+            foreach (Arr::get($allFields, $path) as $key => $field) {
+                if (!array_key_exists($key, $value)) {
+                    continue;
+                }
+
+                $this->processValueOrContinue($value[$key], $path.'.'.$key, $allFields, $fields);
+            }
+
+            return;
+        }
+
+        if (is_array($value)) {
+            if (array_key_exists('inherit', $value) && $value['inherit']) {
+                if (Arr::get($allFields, $path)->getDefaultOnNull() == Arr::get($allFields, $path)->value()) {
+                    return null;
+                }
+                $fields = Arr::add($fields, $path, null);
+                return null;
+            }
+
+            if (array_key_exists('value', $value)) {
+                $fields = Arr::add($fields, $path, (is_null($value['value'])) ? '' : $value['value']);
+                return null;
+            }
+
+            if (array_key_exists('value'.Field::FILE_DELETE_FLAG, $value)) {
+                $fields = Arr::add($fields, $path.Field::FILE_DELETE_FLAG, $value['value'.Field::FILE_DELETE_FLAG]);
+                return null;
+            }
+        }
+
+        $fields = Arr::add($fields, $path, $value);
+    }
+
     public function store()
     {
         $data = \request()->all();
@@ -239,70 +285,46 @@ class ConfigController extends AdminController
 
         $activeSection = '';
 
-         foreach ($data as $section => $groups) {
-             if (!isset($tree[$section])) {
-                 continue;
-             }
+        foreach ($data as $section => $groups) {
+            if (!isset($tree[$section])) {
+                continue;
+            }
 
-             $activeSection = $section;
+            $activeSection = $section;
 
-             $form = $this->makeForm($section, $tree[$section], $allFields);
+            $form = $this->makeForm($section, $tree[$section], $allFields);
 
-             $fields = [];
-             foreach ($groups as $groupName => $groupFields) {
-                 foreach ($groupFields as $fieldName => $value) {
-                     $path = $section.'.'.$groupName.'.'.$fieldName;
+            $fields = [];
+            foreach ($groups as $groupName => $groupFields) {
+                foreach ($groupFields as $fieldName => $value) {
+                    $path = $section.'.'.$groupName.'.'.$fieldName;
 
-                     if (is_array($value) && array_key_exists('inherit', $value) && $value['inherit']) {
-                         if ($allFields[$path]->getDefaultOnNull() == $allFields[$path]->value()) {
-                             continue;
-                         }
+                    if (!Arr::has($allFields, $path)) {
+                        continue;
+                    }
 
-                         $fields[$section][$groupName][$fieldName] = null;
-//                         $data[$section][$groupName][$fieldName] = ['value' => null];
-//                         $fields[$path] = null;
-                         continue;
-                     }
+                    $this->processValueOrContinue($value, $path, $allFields, $fields);
+                }
+            }
 
-                     if (is_array($value) && array_key_exists('value', $value)) {
-                         $fields[$section][$groupName][$fieldName] = (is_null($value['value'])) ? '' : $value['value'];
-//                         $data[$section][$groupName][$fieldName] = ['value' => $value['value']];
-//                         $fields[$path] = $value['value'];
-                         continue;
-                     }
+            \request()->merge([
+                $section => $fields[$section],
+            ]);
 
-                     if (is_array($value) && array_key_exists('value'.Field::FILE_DELETE_FLAG, $value)) {
-                         $fields[$section][$groupName][$fieldName.Field::FILE_DELETE_FLAG] = $value['value'.Field::FILE_DELETE_FLAG];
-                         continue;
-                     }
+            if ($validationMessages = $form->validateData($fields)) {
+                return $this->responseValidationError($validationMessages, $section);
+            }
 
+            DB::transaction(function () use ($fields, $form) {
+                $updates = $this->prepareUpdate($fields, $form);
 
-
-                     $fields[$section][$groupName][$fieldName] = $value;
-//                     $fields[$path] = $value;
-                 }
-             }
-
-             \request()->merge([
-                 $section => $fields[$section],
-             ]);
-
-             if ($validationMessages = $form->validateData($fields)) {
-                 return $this->responseValidationError($validationMessages, $section);
-             }
-
-
-
-             DB::transaction(function () use ($fields, $form) {
-                 $updates = $this->prepareUpdate($fields, $form);
-
-                 $collection = \Bulbalara\CoreConfig\Models\Config::whereIn('path', array_keys($updates))->get();
-                 foreach ($collection as $config) {
-                     $config->setAttribute('value', $updates[$config->path]);
-                     $config->save();
-                 }
-             });
-         }
+                $collection = \Bulbalara\CoreConfig\Models\Config::whereIn('path', array_keys($updates))->get();
+                foreach ($collection as $config) {
+                    $config->setAttribute('value', $updates[$config->path]);
+                    $config->save();
+                }
+            });
+        }
 
 
         if ($response = $this->ajaxResponse(trans('admin.update_succeeded'))) {
