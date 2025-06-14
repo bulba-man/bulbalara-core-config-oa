@@ -82,7 +82,18 @@ return [
             'tab_label' => 'Mail',
             'transport' => [
                 'group_label' => 'Transport',
-                'config' => 'Driver'
+                'mailer' => 'Driver',
+                'smtp' => [
+                    'host' => 'Host',
+                    'port' => 'Port',
+                    'port-help' => 'Usually: 25, 465 (for SSL) and 587 (for TLS)',
+                    'encryption' => 'Encryption',
+                    'username' => 'Username',
+                    'password' => 'Password',
+                ],
+                'log' => [
+                    'channel' => 'Channel'
+                ],
             ],
             'addresses' => [
                 'group_label' => 'Addresses',
