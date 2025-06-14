@@ -30,30 +30,30 @@ class ConfigSeeder extends Seeder
             'default' => 'log',
             'backend_type' => 'select',
             'source' => json_encode(['smtp' => 'SMTP', 'sendmail' => 'Sendmail', 'log' => 'Log']),
-            'label' => 'Driver'
+            'label' => 'bl.config::core_config.config.mail.transport.mailer'
         ]);
 
-        \ConfigOA::addConfig('mail.transport.smtp_host', [
+        \ConfigOA::addConfig('mail.transport.smtp.host', [
             'value' => '',
             'cast' => 'string',
             'default' => '',
             'backend_type' => 'text',
             'depends_of' => 'mail.transport.mailer',
             'depends_val' => 'smtp',
-            'label' => 'Host'
+            'label' => 'bl.config::core_config.config.mail.transport.smtp.host'
         ]);
 
-        \ConfigOA::addConfig('mail.transport.smtp_port', [
+        \ConfigOA::addConfig('mail.transport.smtp.port', [
             'value' => '465',
             'cast' => 'string',
             'default' => '465',
             'backend_type' => 'text',
             'depends_of' => 'mail.transport.mailer',
             'depends_val' => 'smtp',
-            'label' => 'Port',
-            'description' => 'Стандартные: 25, 465 (для SSL) и 587 (для TLS)'
+            'label' => 'bl.config::core_config.config.mail.transport.smtp.port',
+            'description' => 'bl.config::core_config.config.mail.transport.smtp.port-help'
         ]);
-        \ConfigOA::addConfig('mail.transport.smtp_encryption', [
+        \ConfigOA::addConfig('mail.transport.smtp.encryption', [
             'value' => 'tls',
             'cast' => 'string',
             'default' => 'tls',
@@ -61,61 +61,61 @@ class ConfigSeeder extends Seeder
             'source' => json_encode(['ssl' => 'SSL', 'tls' => 'TLS']),
             'depends_of' => 'mail.transport.mailer',
             'depends_val' => 'smtp',
-            'label' => 'Encryption'
+            'label' => 'bl.config::core_config.config.mail.transport.smtp.encryption'
         ]);
-        \ConfigOA::addConfig('mail.transport.smtp_username', [
+        \ConfigOA::addConfig('mail.transport.smtp.username', [
             'value' => '',
             'cast' => 'string',
             'default' => '',
             'backend_type' => 'text',
             'depends_of' => 'mail.transport.mailer',
             'depends_val' => 'smtp',
-            'label' => 'Username'
+            'label' => 'bl.config::core_config.config.mail.transport.smtp.username'
         ]);
-        \ConfigOA::addConfig('mail.transport.smtp_password', [
+        \ConfigOA::addConfig('mail.transport.smtp.password', [
             'value' => '',
             'cast' => 'string',
             'default' => '',
             'backend_type' => 'text',
             'depends_of' => 'mail.transport.mailer',
             'depends_val' => 'smtp',
-            'label' => 'Password'
+            'label' => 'bl.config::core_config.config.mail.transport.smtp.password'
         ]);
 
-        \ConfigOA::addConfig('mail.transport.log_channel', [
+        \ConfigOA::addConfig('mail.transport.log.channel', [
             'value' => '',
             'cast' => 'string',
             'default' => '',
             'backend_type' => 'text',
             'depends_of' => 'mail.transport.mailer',
             'depends_val' => 'log',
-            'label' => 'Channel'
+            'label' => 'bl.config::core_config.config.mail.transport.log.channel'
         ]);
 
 
-        \ConfigOA::addConfig('mail.addresses.sender_email', [
-            'value' => 'noreply@bulbaman.info',
+        \ConfigOA::addConfig('mail.addresses.from.address', [
+            'value' => '',
             'cast' => 'string',
             'default' => '',
             'backend_type' => 'email',
             'label' => 'bl.config::core_config.config.mail.addresses.sender_email'
         ]);
 
-        \ConfigOA::addConfig('mail.addresses.sender_name', [
+        \ConfigOA::addConfig('mail.addresses.from.name', [
             'value' => '',
             'cast' => 'string',
             'default' => 'Sender',
-            'backend_type' => 'string',
+            'backend_type' => 'text',
             'label' => 'bl.config::core_config.config.mail.addresses.sender_name'
         ]);
 
         \ConfigOA::addConfig('mail.addresses.receivers', [
-            'value' => '["nikitadm@tut.by"]',
+            'value' => '',
             'cast' => 'json',
             'default' => '[]',
             'backend_type' => 'list',
             'label' => 'bl.config::core_config.config.mail.addresses.receivers',
-            'rules' => 'email'
+            'rules' => 'nullable|email'
         ]);
 
         /*
@@ -127,8 +127,8 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.fields_masks.sku',
                     'description' => '',
                 ]);
-        
-        
+
+
                 \ConfigOA::addConfig('catalog.fields_masks.meta_title', [
                     'value' => '{{name}}',
                     'cast' => 'string',
@@ -137,8 +137,8 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.fields_masks.meta_title',
                     'description' => '',
                 ]);
-        
-        
+
+
                 \ConfigOA::addConfig('catalog.fields_masks.meta_keyword', [
                     'value' => '{{name}}',
                     'cast' => 'string',
@@ -147,8 +147,8 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.fields_masks.meta_keyword',
                     'description' => '',
                 ]);
-        
-        
+
+
                 \ConfigOA::addConfig('catalog.fields_masks.meta_description', [
                     'value' => '{{name}} {{description}}',
                     'cast' => 'string',
@@ -157,8 +157,8 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.fields_masks.meta_description',
                     'description' => '',
                 ]);
-        
-        
+
+
                 \ConfigOA::addConfig('catalog.frontend.show_price', [
                     'value' => 1,
                     'cast' => 'boolean',
@@ -167,7 +167,7 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.frontend.show_price',
                     'description' => '',
                 ]);
-        
+
                 \ConfigOA::addConfig('catalog.frontend.list_mode', [
                     'value' => ListModes::GRID_LIST,
                     'cast' => 'string',
@@ -177,7 +177,7 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.frontend.list_mode',
                     'description' => '',
                 ]);
-        
+
                 \ConfigOA::addConfig('catalog.frontend.per_page_list', [
                     'value' => '12,24,36',
                     'cast' => 'string',
@@ -186,7 +186,7 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.frontend.per_page_list',
                     'description' => 'bl.catalog::admin.config.catalog.frontend.per_page_list-help',
                 ]);
-        
+
                 \ConfigOA::addConfig('catalog.frontend.per_page_default', [
                     'value' => '12',
                     'cast' => 'string',
@@ -195,7 +195,7 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.frontend.per_page_default',
                     'description' => 'bl.catalog::admin.config.catalog.frontend.per_page_default-help',
                 ]);
-        
+
                 \ConfigOA::addConfig('catalog.frontend.default_sort_by', [
                     'value' => 'position',
                     'cast' => 'string',
@@ -205,7 +205,7 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.frontend.default_sort_by',
                     'description' => 'bl.catalog::admin.config.catalog.frontend.default_sort_by-help',
                 ]);
-        
+
                 \ConfigOA::addConfig('catalog.frontend.list_allow_all', [
                     'value' => '0',
                     'cast' => 'boolean',
@@ -214,7 +214,7 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.frontend.list_allow_all',
                     'description' => 'bl.catalog::admin.config.catalog.frontend.list_allow_all-help',
                 ]);
-        
+
                 \ConfigOA::addConfig('catalog.frontend.review', [
                     'value' => '0',
                     'cast' => 'boolean',
@@ -223,10 +223,10 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.frontend.review',
                     'description' => '',
                 ]);
-        
-        
-        
-        
+
+
+
+
                 \ConfigOA::addConfig('catalog.seo.product_url_suffix_enable', [
                     'value' => '1',
                     'cast' => 'boolean',
@@ -257,7 +257,7 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.seo.category_url_suffix',
                     'description' => '',
                 ]);
-        
+
                 \ConfigOA::addConfig('catalog.seo.use_catalog', [
                     'value' => '1',
                     'cast' => 'boolean',
@@ -272,7 +272,7 @@ class ConfigSeeder extends Seeder
                     'backend_type' => 'switch',
                     'label' => 'bl.catalog::admin.config.catalog.seo.product_use_categories'
                 ]);
-        
+
                 \ConfigOA::addConfig('catalog.seo.category_canonical_tag', [
                     'value' => '1',
                     'cast' => 'boolean',
@@ -287,7 +287,7 @@ class ConfigSeeder extends Seeder
                     'backend_type' => 'switch',
                     'label' => 'bl.catalog::admin.config.catalog.seo.product_canonical_tag'
                 ]);
-        
+
                 \ConfigOA::addConfig('catalog.currency.base', [
                     'value' => 'USD',
                     'cast' => 'string',
@@ -297,7 +297,7 @@ class ConfigSeeder extends Seeder
                     'label' => 'bl.catalog::admin.config.catalog.currency.base',
                     'description' => 'bl.catalog::admin.config.catalog.currency.base-help',
                 ]);
-        
+
                 \ConfigOA::addConfig('catalog.currency.default', [
                     'value' => 'USD',
                     'cast' => 'string',
@@ -306,7 +306,7 @@ class ConfigSeeder extends Seeder
                     'source' => \Bulbalara\CatalogOa\Models\Source\Config\Currencies::class,
                     'label' => 'bl.catalog::admin.config.catalog.currency.default',
                 ]);
-        
+
                 \ConfigOA::addConfig('catalog.currency.allow', [
                     'value' => '',
                     'cast' => 'json',

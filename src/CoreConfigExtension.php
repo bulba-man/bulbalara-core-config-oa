@@ -17,7 +17,11 @@ class CoreConfigExtension extends Extension
      */
     public static function load()
     {
-        if (!Schema::hasTable(config('bl.config.db.table', 'core_config'))) {
+        try {
+            if (!Schema::hasTable(config('bl.config.db.table', 'core_config'))) {
+                return;
+            }
+        } catch (\Exception $e) {
             return;
         }
 
@@ -25,6 +29,16 @@ class CoreConfigExtension extends Extension
             $value = (!is_null($config->value)) ? $config->value : $config->default;
             config([$config->path => $value]);
         }
+
+        $mailer = config('mail.transport.mailer');
+        config(['mail.default' => $mailer]);
+        if (config('mail.transport.'.$mailer)) {
+            config(['mail.mailers.'.$mailer => array_merge(
+                config('mail.mailers.'.$mailer), config('mail.transport.'.$mailer)
+            )]);
+        }
+
+        config(['mail.from' => config('mail.addresses.from')]);
     }
 
     /**

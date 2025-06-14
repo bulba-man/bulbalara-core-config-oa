@@ -82,7 +82,18 @@ return [
             'tab_label' => 'Почта',
             'transport' => [
                 'group_label' => 'Настройки Транспорта',
-                'config' => 'Использовать для отправки'
+                'mailer' => 'Драйвер',
+                'smtp' => [
+                    'host' => 'Хост',
+                    'port' => 'Порт',
+                    'port-help' => 'Стандартные: 25, 465 (для SSL) и 587 (для TLS)',
+                    'encryption' => 'Шифрование',
+                    'username' => 'Имя пользователя',
+                    'password' => 'Пароль',
+                ],
+                'log' => [
+                    'channel' => 'Канал'
+                ],
             ],
             'addresses' => [
                 'group_label' => 'Адреса',
