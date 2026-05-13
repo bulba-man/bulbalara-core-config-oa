@@ -175,7 +175,7 @@ class ConfigController extends AdminController
 
     protected function fillField(Field $field, ConfigModel $configItem): Field
     {
-        if (!$field->value()) {
+        if (!$field->value() || $field->value() == ['']) {
             $field->setValue($configItem->coreConfig->value);
         }
 
